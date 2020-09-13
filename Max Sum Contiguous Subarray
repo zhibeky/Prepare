@@ -1,0 +1,38 @@
+// USE KADANE'S ALGORITHM
+
+#include <iostream>
+#include <cmath>
+#include <vector>
+using namespace std;
+
+int maxSubArray(const vector<int> &A) {
+    
+    int max_current = 0;
+    int max_global = -2147483648; //INT_MIN
+    for(int i : A){
+        max_current = max(i,max_current+i);
+        if(max_current > max_global)
+            max_global = max_current;
+    }
+    return max_global;
+}
+
+
+void printVector(vector<int> &v) {
+    for(const auto &i : v) {
+        cout << i << " ";
+    }
+}
+
+int main() {
+    vector<int> A = {0,0,1,1};
+    vector<int> B = {1,2,3};
+    vector<int> C = {9,9,9,9};
+    vector<int> D = {0,9};
+    vector<int> E = {1,2,3,4,-10};
+
+    cout << maxSubArray(E);
+
+    // printVector(v); 
+    return 0;
+}
