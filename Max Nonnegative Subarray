@@ -1,0 +1,34 @@
+int sum(vector<int> &v) {
+    int sum = 0;
+    for(const auto &i : v) {
+        sum += i;
+    }
+    return sum;
+}
+vector<int> Solution::maxset(vector<int> &A) {
+    vector<int> temp, curr1;
+    vector<vector<int>> curr2;
+    int N = A.size();
+    
+    for(int i = 0; i <= N; i++) {
+        if(i == N || A[i] < 0) {
+            curr2.push_back(temp);
+            curr1.push_back(sum(temp));
+            temp.clear();
+        }
+        else {
+            temp.push_back(A[i]);
+        }
+    }
+    
+    int max = 0, index = 0;
+    for(int i = 0; i < curr1.size(); i++) {
+        if(max < curr1[i]) {
+            max = curr1[i];
+            index = i;
+        }
+    }
+    return curr2[index];
+}
+
+
