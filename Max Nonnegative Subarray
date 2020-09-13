@@ -1,34 +1,79 @@
-int sum(vector<int> &v) {
-    int sum = 0;
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> maxset(vector<int> &A) {
+    
+    long long int i, sum = 0, maxx = 0, j, start, end, first, flag = 0;
+    
+    for(i = 0; i < A.size(); i++) {
+        
+        if(A[i] >= 0) flag = 1;
+    }
+    
+    if(flag == 0)  return {};
+    
+    for(i = 0; i < A.size(); i++) {
+        
+        if(A[i] >= 0) {
+            start = i;
+            sum = 0;
+            
+            while(i < A.size() && A[i] >= 0) {
+                sum += A[i++];
+            }
+            
+            if(maxx <= sum) {
+                maxx = sum;
+                first = start;
+                end = i;
+            }
+        }
+    }   
+    
+    int len = 0,maxi = 0;
+    
+    if(maxx == 0) {
+        
+        vector<int> vec;
+        
+        for(int i = 0; i < A.size(); i++) {
+            
+            while(A[i++] == 0)
+                len++;
+            maxi = max(len, maxi);
+        }
+        
+        for(i = 0; i < maxi; i++)
+            vec.push_back(0);
+            
+        return vec;
+    }
+    // cout<<maxx<<" ";
+    vector<int> ans;
+    for(i = first; i < end; i++) {
+        ans.push_back(A[i]);
+    }
+    
+    return ans;
+}
+
+
+void printVector(vector<int> &v) {
     for(const auto &i : v) {
-        sum += i;
+        cout << i << " ";
     }
-    return sum;
-}
-vector<int> Solution::maxset(vector<int> &A) {
-    vector<int> temp, curr1;
-    vector<vector<int>> curr2;
-    int N = A.size();
-    
-    for(int i = 0; i <= N; i++) {
-        if(i == N || A[i] < 0) {
-            curr2.push_back(temp);
-            curr1.push_back(sum(temp));
-            temp.clear();
-        }
-        else {
-            temp.push_back(A[i]);
-        }
-    }
-    
-    int max = 0, index = 0;
-    for(int i = 0; i < curr1.size(); i++) {
-        if(max < curr1[i]) {
-            max = curr1[i];
-            index = i;
-        }
-    }
-    return curr2[index];
+    cout << endl;
 }
 
-
+int main() {
+    vector<int> A = {336465782, -278722862, -2145174067, 1101513929, 1315634022, -1369133069, 1059961393, 628175011, -1131176229, -859484421};
+    vector<int> B = {-1,-1,-1,-1,-1};
+    vector<int> C = {0,0,-1,0};
+    vector<int> D = {1,2,5,-7,2,3};
+    vector<int> v = maxset(D);
+    
+    printVector(v);
+    
+    return 0;
+}
