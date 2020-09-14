@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    long long int n, a, b, c;
+    
+    cin >> n >> a >> b >> c;
+    
+    long long int max = 0;
+    
+    if (a <= (b - c) || n < b) {
+        cout << n / a << endl;
+    } 
+    else {
+        long long int k = (n - b) / (b - c) + 1;
+        n -= k * (b - c);
+        k += n/a;
+        cout << k << endl;
+    }
+    
+    return 0;
+}
