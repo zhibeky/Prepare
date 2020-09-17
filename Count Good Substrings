@@ -1,0 +1,63 @@
+// Suppose you have found the number of odd and even palindromic substring for
+// the first few characters of the string. For example, aabaaabb have 8 even 
+// palindromic substring and 13 odd palindromic substring. At the same time, 
+// we maintain the number of 'a's at even and odd positions, and the number 
+// of 'b's at odd and even positions respectively. In the above example, we 
+// have 2'a's at odd positions and 3'a's at even positions, while we have
+// 2'b's at odd positions and another 'b' at even position.
+
+// When we append a new character to the end of the string, we can compute 
+// the number of palindromic substring which ends with the new character. 
+// For example, if the appended character is 'a', the number of odd palindromic
+// substring which ends with the new character will be the number of 'a's at
+// odd positions, and the number of even palindromic substring which ends with
+// the new 'a' will be the number of 'a's at even positions. Hence, the new
+// string aabaaabba will have 11 (8+3) even palindromic substring and
+// 16 (13+2+1) odd palindromic substrings (don't forget to consider the 
+// new character as a substring of length 1). There are several cases to 
+// consider depending on the parity of the position for the new character, 
+// but it is not hard to code them out.
+
+// Repeat the above steps, each time appending a new character to 
+// obtain the final results. Example solution here: 7227422
+
+
+#include<iostream>
+using namespace std;
+
+pair<long long , long long > solve(string s)
+{
+      long long int ansEven = 0, ansOdd = 0;
+      int cntEven[2], cntOdd[2];
+      cntEven[0] = cntEven[1] = cntOdd[0] = cntOdd[1] = 0;
+      for (int i = 0; i < s.size(); i++)
+      {
+            ansOdd++;
+            int id = s[i] - 'a';
+            if (i % 2 == 0)
+            {
+                  ansOdd += cntEven[id];
+                  ansEven += cntOdd[id];
+                  cntEven[id]++;
+            }
+            else
+            {
+                  ansOdd += cntOdd[id];
+                  ansEven += cntEven[id];
+                  cntOdd[id]++;
+            }
+      }
+      return make_pair(ansEven, ansOdd);
+}
+ 
+ 
+int main()
+{
+	
+	string s;
+	cin >> s;
+	pair<long long, long long> ans = solve(s);
+	cout << ans.first << " " << ans.second << endl;
+      
+      return 0;
+}
